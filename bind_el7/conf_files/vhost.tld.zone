@@ -1,0 +1,23 @@
+; BIND data file for vhost.tld
+
+$TTL    300
+@       IN      SOA     vhost.tld. name.vhost.tld. (
+                     2016022702         ; Serial
+                            300         ; Refresh
+                           1800         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+
+; nameservers
+@	                    IN	NS	ns1.vhost.tld.
+@	                    IN	NS	ns2.vhost.tld.
+
+; mail
+vhost.tld.        IN	MX	10	mail.vhost.tld.
+
+; Domain
+vhost.tld.            IN  A   1.2.3.4
+www	               IN	A	  1.2.3.4
+mail                 	IN	A	  1.2.3.4
+ns1                   IN	A	  1.2.3.4
+ns2                   IN	A	  1.2.3.4
