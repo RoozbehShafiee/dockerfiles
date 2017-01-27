@@ -1,18 +1,18 @@
-## Containerized NGINX Web Server Based on CentOS 7
+## Containerized PHP-FPM 7 / NGINX Web Server Based on CentOS 7
 
 FROM centos
 MAINTAINER Roozbeh Shafiee <me@roozbeh.cloud>
 
 ## system update and package installation
 RUN yum -y update; yum clean all
-RUN yum -y install epel-release; yum clean all
-RUN yum -y install nginx php-mysql php-fpm php-mysql pwgen supervisor psmisc net-tools hostname; yum clean all
+RUN yum -y install https://mirror.webtatic.com/yum/el7/webtatic-release.rpm; yum clean all
+RUN yum -y install nginx php70w-mysqlnd php70w-fpm php70w-xml hostname; yum clean all
 
 ## edit configuration files
 RUN sed -ie 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php.ini
 RUN sed -ie "s|listen = 127.0.0.1:9000|listen = /var/run/php-fpm/php-fpm.sock|g" /etc/php-fpm.d/www.conf
-RUN sed -ie 's/;listen.owner = nobody/listen.owner = nobody/g' /etc/php-fpm.d/www.conf
-RUN sed -ie 's/;listen.group = nobody/listen.group = nobody/g' /etc/php-fpm.d/www.conf
+RUN sed -ie 's/;listen.owner = nobody/listen.owner = nginx/g' /etc/php-fpm.d/www.conf
+RUN sed -ie 's/;listen.group = nobody/listen.group = nginx/g' /etc/php-fpm.d/www.conf
 RUN sed -ie 's/user = apache/user = nginx/g' /etc/php-fpm.d/www.conf
 RUN sed -ie 's/group = apache/group = nginx/g' /etc/php-fpm.d/www.conf
 
